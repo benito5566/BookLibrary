@@ -40,5 +40,19 @@ namespace Domain.UnitTests
             // Assert
             StringAssert.Contains($"Book is not available. Book id: [{book.Id}]", exception?.Message);
         }
+
+        [Test]
+        public void Reserve_ValidReservation_ShouldSendEmail()
+        {
+            // Arrange
+            var book = new Book("Harry Potter", "MC", _emailSender);
+            var user = new User("Jhon", "Doe", "jdoe@gmail.com");
+
+            // Act
+            var result = book.Reserve(user);
+
+            // Assert
+            A.CallTo(() => _emailSender.SendReservationEmail(A<Reservation>._)).MustHaveHappened();
+        }
     }
 }
