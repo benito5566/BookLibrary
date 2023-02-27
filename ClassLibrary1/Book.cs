@@ -29,6 +29,8 @@ namespace Domain
             }
 
             var reservation = new Reservation(user, this);
+            var emailSender = new EmailSender();
+            emailSender.SendReservationEmail(reservation);
 
             return reservation;
         }
