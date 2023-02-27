@@ -9,12 +9,15 @@ namespace Domain
         public string Editorial { get; private set; }
         public BookStatus Status { get; private set; }
 
-        public Book(string name, string editorial)
+        private readonly IEmailSender _emailSender;
+
+        public Book(string name, string editorial, IEmailSender emailSender)
         {
             Id = Guid.NewGuid();
             Name = name;
             Editorial = editorial;
             Status = BookStatus.Available;
+            _emailSender = emailSender;
         }
 
         public Reservation Reserve(User user)
@@ -29,8 +32,7 @@ namespace Domain
             }
 
             var reservation = new Reservation(user, this);
-            var emailSender = new EmailSender();
-            emailSender.SendReservationEmail(reservation);
+            _emailSender.SendReservationEmail(reservation);
 
             return reservation;
         }

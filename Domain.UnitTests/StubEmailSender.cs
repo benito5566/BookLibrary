@@ -2,11 +2,11 @@
 
 namespace Domain
 {
-    public class EmailSender : IEmailSender
+    public class StubEmailSender : IEmailSender
     {
         public void SendReservationEmail(Reservation reservation)
         {
-            throw new ApplicationException("EmailSender is not available");
+            Console.WriteLine("Email has been sent!");
         }
     }
 }

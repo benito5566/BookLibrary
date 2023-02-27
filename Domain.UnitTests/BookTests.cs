@@ -6,7 +6,8 @@
         public void Reserve_WhenBookAvailable_ShouldReturnReservation()
         {
             // Arrange
-            var book = new Book("Harry Potter", "MC");
+            var emailSender = new StubEmailSender();
+            var book = new Book("Harry Potter", "MC", emailSender);
             var user = new User("Jhon", "Doe", "jdoe@gmail.com");
 
             // Act
@@ -20,7 +21,8 @@
         public void Reserve_WhenBookIsReserved_ShouldThrowException()
         {
             // Arrange
-            var book = new Book("Harry Potter", "MC");
+            var emailSender = new StubEmailSender();
+            var book = new Book("Harry Potter", "MC", emailSender);
             var user = new User("Jhon", "Doe", "jdoe@gmail.com");
             book.Reserve(user);
 
