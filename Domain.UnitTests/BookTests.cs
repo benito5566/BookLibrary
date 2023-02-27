@@ -4,12 +4,19 @@ namespace Domain.UnitTests
 {
     public class BookTests
     {
+        private IEmailSender _emailSender;
+
+        [SetUp]
+        public void SetUp() 
+        { 
+            _emailSender = A.Fake<IEmailSender>();
+        }
+
         [Test]
         public void Reserve_WhenBookAvailable_ShouldReturnReservation()
         {
             // Arrange
-            var emailSender = A.Fake<IEmailSender>();
-            var book = new Book("Harry Potter", "MC", emailSender);
+            var book = new Book("Harry Potter", "MC", _emailSender);
             var user = new User("Jhon", "Doe", "jdoe@gmail.com");
 
             // Act
@@ -23,8 +30,7 @@ namespace Domain.UnitTests
         public void Reserve_WhenBookIsReserved_ShouldThrowException()
         {
             // Arrange
-            var emailSender = A.Fake<IEmailSender>();
-            var book = new Book("Harry Potter", "MC", emailSender);
+            var book = new Book("Harry Potter", "MC", _emailSender);
             var user = new User("Jhon", "Doe", "jdoe@gmail.com");
             book.Reserve(user);
 
