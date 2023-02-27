@@ -4,10 +4,10 @@ namespace Domain
 {
     public class Book
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Editorial { get; set; }
-        public BookStatus Status { get; set; }
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
+        public string Editorial { get; private set; }
+        public BookStatus Status { get; private set; }
 
         public Book(string name, string editorial)
         {
@@ -15,6 +15,22 @@ namespace Domain
             Name = name;
             Editorial = editorial;
             Status = BookStatus.Available;
+        }
+
+        public Reservation Reserve(User user)
+        {
+            if (Status == BookStatus.Available)
+            {
+                Status = BookStatus.Reserved;
+            }
+            else
+            {
+                throw new ApplicationException("Book is not available");
+            }
+
+            var reservation = new Reservation(user, this);
+
+            return reservation;
         }
     }
 }
