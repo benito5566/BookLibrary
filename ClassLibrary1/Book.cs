@@ -25,7 +25,7 @@ namespace Domain
             }
             else
             {
-                throw new ApplicationException("Book is not available");
+                throw new ApplicationException($"Book is not available. Book id: [{Id}]");
             }
 
             var reservation = new Reservation(user, this);
